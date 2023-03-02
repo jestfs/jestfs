@@ -1,0 +1,54 @@
+# `complete` for zsh
+if type complete &>/dev/null; then
+  :
+else
+  autoload bashcompinit
+  bashcompinit
+fi
+
+# completion for jestfs
+_jestfs_completions() {
+  local cur prev opts lastc informats outformats datafiles
+  cur="${COMP_WORDS[COMP_CWORD]}"
+  prev="${COMP_WORDS[COMP_CWORD-1]}"
+  cmdList="help fuzz conform-test"
+  globalOpt="-silent -error -status -time"
+  helpOpt=""
+  extractOpt="-extract:target -extract:log -extract:repl"
+  compileOpt="-compile:log -compile:log-with-loc"
+  buildcfgOpt="-build-cfg:log -build-cfg:dot -build-cfg:pdf"
+  fuzzOpt="-fuzz:log-interval -fuzz:debug -fuzz:timeout -fuzz:trial -fuzz:duration -fuzz:seed -fuzz:k-fs -fuzz:cp"
+  gentestOpt="-gen-test:debug -gen-test:engines -gen-test:transpilers -gen-test:use-cache -gen-test:only -gen-test:skip"
+  conformtestOpt="-conform-test:debug -conform-test:msgdir -conform-test:save-bugs"
+  # completion for commands
+  case "${COMP_CWORD}" in
+    1)
+      COMPREPLY=($(compgen -W "version -version --version ${cmdList}"))
+      return 0
+      ;;
+  esac
+  cmd="${COMP_WORDS[1]}"
+  # completion for options
+  case "${cur}" in
+    -*)
+      case "${cmd}" in
+        help)
+          COMPREPLY=($(compgen -W "${globalOpt} ${helpOpt}"))
+          return 0
+          ;;
+        fuzz)
+          COMPREPLY=($(compgen -W "${globalOpt} ${extractOpt} ${compileOpt} ${buildcfgOpt} ${fuzzOpt}"))
+          return 0
+          ;;
+        conform-test)
+          COMPREPLY=($(compgen -W "${globalOpt} ${gentestOpt} ${conformtestOpt}"))
+          return 0
+          ;;
+      esac
+      return 0
+      ;;
+  esac
+  COMPREPLY=( $(compgen -X '' -f "${cur}") )
+}
+# completion setting
+complete -o filenames -o bashdefault -F _jestfs_completions jestfs

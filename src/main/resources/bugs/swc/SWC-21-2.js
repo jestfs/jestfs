@@ -1,0 +1,13 @@
+async function x ( ) { for await ( x of [ , ] ) 0 ; } x ( ) ; 
+async function x ( ) { for await ( x of [ , ] ) ; } x ( ) ; 
+async function x ( ) { for await ( x of [ , ] ) break ; } x ( ) ; 
+async function x ( ) { for await ( x of [ , ] ) continue ; } x ( ) ; 
+async function x ( ) { for await ( x of [ , ] ) return ; } x ( ) ; 
+let x = async x => { for await ( let x of this . x &&= 0 ) ; } ; x ( ) ; 
+let x = async x => { for await ( this . x of [ 0 ] ) await x ; } ; x ( ) ; 
+let x = async x => { for await ( this . x of [ 0 ] ) switch ( 0 in 0 ) { } } ; x ( ) ; 
+let x = async x => { for await ( this . x of [ 0 ] ) { let x ; } } ; x ( ) ; 
+let x = async x => { for await ( this . x of async function * ( ) { throw ( yield 0 ) ; } ( ) ) ; } ; x ( ) ; 
+let x = async x => { for await ( var x of this . x ++ ) ; } ; x ( ) ; 
+let x = async x => { for await ( var x of this . x |= 0 ) ; } ; x ( ) ; 
+let x = async x => { for await ( x of this . x = 0 ) ; } ; x ( ) ; 

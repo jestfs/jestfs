@@ -1,0 +1,4 @@
+def StringToCodePoints(string: String): Unknown {
+  // IGNORE original algo
+  return string
+}

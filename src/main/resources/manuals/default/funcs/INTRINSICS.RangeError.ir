@@ -1,0 +1,22 @@
+def <BUILTIN>:INTRINSICS.RangeError(this: Unknown, argumentsList: Unknown, NewTarget: Unknown) {
+  if (< 0 argumentsList.length) let message = (pop < argumentsList) else let message = absent
+  if (< 0 argumentsList.length) let options = (pop < argumentsList) else let options = absent
+  %0 = (= NewTarget undefined)
+  if %0 {
+    let newTarget = @EXECUTION_STACK[0].Function
+  } else {
+    let newTarget = NewTarget
+  }
+  call %1 = clo<OrdinaryCreateFromConstructor>(newTarget, "%RangeError.prototype%", (new ["ErrorData"]))
+  let O = [? %1]
+  %2 = (! (= message undefined))
+  if %2 {
+    call %3 = clo<ToString>(message)
+    let msg = [? %3]
+    call %4 = clo<CreateNonEnumerableDataPropertyOrThrow>(O, "message", msg)
+    [! %4]
+  } else {}
+  call %5 = clo<InstallErrorCause>(O, options)
+  [? %5]
+  return O
+}

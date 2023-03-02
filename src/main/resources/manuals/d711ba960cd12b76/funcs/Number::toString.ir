@@ -1,0 +1,3 @@
+def <NUM>:Number::toString(x: Number): String {
+  return ([str] x)
+}

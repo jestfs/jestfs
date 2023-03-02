@@ -1,0 +1,7 @@
+def <BUILTIN>:INTRINSICS.Function.prototype(
+  this: Unknown,
+  argumentsList: Unknown,
+  NewTarget: Unknown
+) {
+  return undefined
+}

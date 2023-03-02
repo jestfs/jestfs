@@ -1,0 +1,18 @@
+! `${ '' [ 0 ] ( ) ?. x }` ; 
++ 0 . x ( ) ?. x ; 
+0 . x ( ) ?. x ; 
+0 / ! function ( ) { } ( ) ( ) ?. x ; 
+0 / ! function ( ) { } ( ) ( ... 0 ) ?. x ; 
+0 > 0n . x ( ) ?. x ; 
+0 > [ ] . x ( ) ?. x ; 
+0 > `` . x ( ) ?. x ; 
+0 > true . x ( ) ?. x ; 
+[ 1n . x ( ) ?. x ] ; 
+[ [ ] . x ( ) ?. x ] ; 
+[ `` . x ( ) ?. x ] ; 
+[ true . x ( ) ?. x ] ; 
+for ( let x ; x ( ) ?. x ; ) ; 
+if ( function ( x , ) { } ( ) ( ) ?. x ) ; 
+let x , await = { get 0 ( ) { } , } [ - x ( ) ?. x ] ; 
+new class { 0 = super [ super . x ( ) ?. x ] ; } ; 
+var x = x ( ) ?. x ; 
