@@ -79,13 +79,13 @@ js -e "print(42);"
 ```
 
 ### JavaScriptCore
-(NOTE: Trying to install JavaScriptCore on Linux requires heavy dependency for build system, and is highly likely to fail)
 
 The [JavaScriptCore](https://developer.apple.com/documentation/javascriptcore)
 framework provides the ability to evaluate JavaScript programs from within
 Swift, Objective-C, and C-based apps. See
 https://github.com/WebKit/WebKit#building-webkit.
 ```bash
+# MacOS
 # install Xcode and turn on the developer mode
 xcode-select --install
 sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
@@ -97,12 +97,30 @@ git clone https://github.com/WebKit/WebKit.git WebKit -b safari-7615.1.10-branch
 cd WebKit
 ./Tools/Scripts/build-jsc --release
 
-# set the DYLD_FRAMEWORK_PATH environment variable
+# set the DYLD_FRAMEWORK_PATH environment variable and PATH environment variable
 export WEBKIT_HOME=<webkit>
 export DYLD_FRAMEWORK_PATH=$WEBKIT_HOME/WebKitBuild/Release
-
-# point the PATH environment variable to the jsc
 export PATH=$DYLD_FRAMEWORK_PATH:$PATH
+
+# run JavaScriptCore
+#   -e : execute a string as script
+jsc -e "print(42);"
+```
+```bash
+# Linux
+# NOTE: Installation works properly on Ubuntu 22.04. Installation may fail in older versions
+# install latest versions of required packages
+sudo apt install cmake gcc clang libicu-dev ruby python3 pip
+
+# clone WebKit git repository
+git clone https://github.com/WebKit/WebKit.git WebKit -b safari-7615.1.10-branch --single-branch --depth 1
+
+# build WebKit
+cd WebKit
+CXX=g++ ./Tools/Scripts/build-jsc --release --jsc-only
+
+# set the PATH environment variable
+export PATH=<webkit>/WebKitBuild/Release/bin:$PATH
 
 # run JavaScriptCore
 #   -e : execute a string as script
