@@ -1,11 +1,26 @@
-# Installation
+# Installation Guide
+
+For evaluation, you need to install the following JavaScript engines and
+transpilers:
+
+|Kind|Name|Version|Release|
+|:-|:-|:-|:-|
+|Engine     |V8            |v10.8.121  |2022.10.06
+|Engine     |JSC           |v615.1.10  |2022.10.26
+|Engine     |GraalJS       |v22.2.0    |2022.07.26
+|Engine     |SpiderMonkey  |v107.0b4   |2022.10.24
+|Transpiler |Babel       |v7.19.1  |2022.09.15
+|Transpiler |SWC         |v1.3.10  |2022.10.21
+|Transpiler |Terser      |v5.15.1  |2022.10.05
+|Transpiler |Obfuscator  |v4.0.0   |2022.02.15
 
 ## Engines
 
 ### d8
 [`d8`](https://v8.dev/docs/d8) is V8's own developer shell. See
 https://v8.dev/docs/source-code and https://v8.dev/docs/build-gn.
-```shell
+
+```bash
 cd $HOME
 
 #install depot_tools and update

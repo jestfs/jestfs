@@ -27,15 +27,25 @@ We support two ways to use `jestfs`:
   1. [Using a Docker container](#using-a-docker-container)
   2. [Building from source](#building-from-source)
 
+However, we STRONGLY RECOMMEND you using the Docker container because it
+requires to install not only artifacts but also target JavaScript engines and
+transpilers.
+
+
 ### Using a Docker Container
 
 We provide a Docker container with `jestfs` and its dependencies. You can
-download the container from Docker Hub:
-
+install the docker by following the instruction in
+[https://docs.docker.com/get-started/](https://docs.docker.com/get-started/) and
+downlaod our docker image with the following command:
 ```bash
-# TODO
-docker pull kaistplrg/jestfs:latest
+docker pull jestfs/jestfs
+docker run -it -m=16g --rm jestfs/jestfs
+# user: guest, password: guest
 ```
+> **WARNING**: The docker image is 3GB large thus be patient when you download
+> it and please assign more than 16GB memory for the docker engine.
+
 
 ### Building from Source
 
@@ -65,6 +75,9 @@ git submodule update --init # update the git submodules
 sbt assembly                # generate binary file `bin/jestfs`
 source .completion          # apply the `.completion` for auto-completion
 ```
+
+For evaluation, you need to install JavaScript engines and transpilers. Please
+refer to the [Installation Guide](INSTALL.md) for more details.
 
 
 ## Basic Commands
@@ -128,7 +141,7 @@ Then, you can generate files generate JavaScript programs via fuzzing with
 jestfs fuzz -fuzz:duration=60 -fuzz:k-fs=1
 ```
 
-> **[WARNING]** Note that it may take a few minutes logner than 60 seconds
+> **WARNING**: Note that it may take a few minutes longer than 60 seconds
 > because it requires to extract the mechanized specification from ECMA-262 and
 > construct initial program pool for fuzzing from it.
 
@@ -159,31 +172,32 @@ feature-sensitive coverage criteria in 50 hours.
 Since it requires 250 hours (approx. 10 days) with a single machine, **we
 RECOMMEND you to use the generated programs we provided in `data.tar.gz`**:
 ```bash
-tar -xf data.tar.gz
+tar -xvf data.tar.gz
 ```
+> **WARNING**: Note that it may take a few minutes.
 
 However, if you want to generate JavaScript programs from the scratch, please
 type the following commands:
 ```bash
 mkdir data
 
-# generate JavaScript programs via fuzzing.
+# with feature-insensitive (0-FS) coverage.
 jestfs fuzz -fuzz:duration=180000
 cp -r logs/fuzz/recent data/0
 
-# generate JavaScript programs via fuzzing with 1-feature-sensitive (1-FS) coverage.
+# with 1-feature-sensitive (1-FS) coverage.
 jestfs fuzz -fuzz:duration=180000 -fuzz:k-fs=1
 cp -r logs/fuzz/recent data/1
 
-# generate JavaScript programs via fuzzing with 1-feature-call-path-sensitive (1-FCPS) coverage.
+# with 1-feature-call-path-sensitive (1-FCPS) coverage.
 jestfs fuzz -fuzz:duration=180000 -fuzz:k-fs=1 -fuzz:cp
 cp -r logs/fuzz/recent data/1-cp
 
-# generate JavaScript programs via fuzzing with 2-feature-sensitive (2-FS) coverage.
+# with 2-feature-sensitive (2-FS) coverage.
 jestfs fuzz -fuzz:duration=180000 -fuzz:k-fs=2
 cp -r logs/fuzz/recent data/2
 
-# generate JavaScript programs via fuzzing with 2-feature-call-path-sensitive (2-FCPS) coverage.
+# with 2-feature-call-path-sensitive (2-FCPS) coverage.
 jestfs fuzz -fuzz:duration=180000 -fuzz:k-fs=2 -fuzz:cp
 cp -r logs/fuzz/recent data/2-cp
 ```
@@ -191,4 +205,29 @@ cp -r logs/fuzz/recent data/2-cp
 
 ### 2) Conformance Test Generation and Bug Detection
 
+To generate conformance tests and detect bugs in a JavaScript engine or a
+transpiler, please type the following commands:
+```bash
+mkdir out
 
+# using programs generated with feature-insensitive (0-FS) coverage.
+jestfs conform-test data/0/minimal data/0/minimal-assertion
+mv logs/conform-test out/0
+
+# using programs generated with 1-feature-sensitive (1-FS) coverage.
+jestfs conform-test data/1/minimal data/1/minimal-assertion
+mv logs/conform-test out/1
+
+# using programs generated with 1-feature-call-path-sensitive (1-FS) coverage.
+jestfs conform-test data/1-cp/minimal data/1-cp/minimal-assertion
+mv logs/conform-test out/1-cp
+
+# using programs generated with 1-feature-sensitive (1-FS) coverage.
+jestfs conform-test data/2/minimal data/2/minimal-assertion
+mv logs/conform-test out/2
+
+# using programs generated with 1-feature-call-path-sensitive (1-FS) coverage.
+jestfs conform-test data/2-cp/minimal data/2-cp/minimal-assertion
+mv logs/conform-test out/2-cp
+```
+> **WARNING**: Note that it may take 5-10 hours.

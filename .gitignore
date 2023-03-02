@@ -40,3 +40,9 @@ tests/result/test262
 ## local .bashrc/.zshrc files
 .bashrc
 .zshrc
+
+## data
+data
+
+## outptu
+out
