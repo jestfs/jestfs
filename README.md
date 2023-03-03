@@ -43,7 +43,7 @@ docker pull jestfs/jestfs
 docker run --name jestfs -it -m=16g --rm jestfs/jestfs
 # user: guest, password: guest
 ```
-> **WARNING**: The docker image is 3GB large thus be patient when you download
+> **WARNING**: The docker image is 15GB large thus be patient when you download
 > it and please assign more than 16GB memory for the docker engine.
 
 
@@ -171,13 +171,12 @@ feature-sensitive coverage criteria in 50 hours.
 
 Since it requires 250 hours (approx. 10 days) with a single machine, **we
 RECOMMEND you to use the generated programs we provided in
-[`data.tar.gz`](https://doi.org/10.5281/zenodo.7693926)**:
+[`data.tar.gz`](https://doi.org/10.5281/zenodo.7694243)**:
 ```bash
-tar -xvf data.tar.gz
-# please copy the data to the docker container if you use docker.
-docker cp data jestfs:/home/guest/jestfs
+# It is already included in the `data` directory when you use the docker image.
+curl https://zenodo.org/record/7694243/files/data.tar.gz -o data.tar.gz
+tar -xvzf data.tar.gz
 ```
-> **WARNING**: Note that it may take a few minutes.
 
 However, if you want to generate JavaScript programs from the scratch, please
 type the following commands:
@@ -211,26 +210,47 @@ cp -r logs/fuzz/recent data/2-cp
 To generate conformance tests and detect bugs in a JavaScript engine or a
 transpiler, please type the following commands:
 ```bash
-mkdir out
+mkdir result
 
 # using programs generated with feature-insensitive (0-FS) coverage.
 jestfs conform-test data/0/minimal data/0/minimal-assertion
-mv logs/conform-test out/0
+mv logs/conform-test result/0
 
 # using programs generated with 1-feature-sensitive (1-FS) coverage.
 jestfs conform-test data/1/minimal data/1/minimal-assertion
-mv logs/conform-test out/1
+mv logs/conform-test result/1
 
 # using programs generated with 1-feature-sensitive (1-FS) coverage.
 jestfs conform-test data/2/minimal data/2/minimal-assertion
-mv logs/conform-test out/2
+mv logs/conform-test result/2
 
 # using programs generated with 1-feature-call-path-sensitive (1-FS) coverage.
 jestfs conform-test data/1-cp/minimal data/1-cp/minimal-assertion
-mv logs/conform-test out/1-cp
+mv logs/conform-test result/1-cp
 
 # using programs generated with 1-feature-call-path-sensitive (1-FS) coverage.
 jestfs conform-test data/2-cp/minimal data/2-cp/minimal-assertion
-mv logs/conform-test out/2-cp
+mv logs/conform-test result/2-cp
 ```
 > **WARNING**: Note that it may take 5-10 hours.
+
+Then, **please compare the `result` directory with the expected result we
+provided in [`out.tar.gz`](https://doi.org/10.5281/zenodo.7694243)**:
+```bash
+# It is already included in the `out` directory when you use the docker image.
+curl https://zenodo.org/record/7694243/files/out.tar.gz -o out.tar.gz
+tar -xvzf out.tar.gz
+
+# compare the result and the expected result.
+diff -r result out
+```
+
+### 3) Tables and Figures
+
+Please open the `Tables & Figures.xlsx` file and compare the following tables
+and figures in the paper:
+
+- Table 1. Detected conformance bugs in JavaScript engines and transpilers
+- Table 2. Comparison of synthesized conformance tests guided by five graph coverage criteria
+- Fig. 9. The histogram of numbers of $k$-FS or $k$-FCPS TRs per less sensitive $k$-FS or $k$-FCPS TR
+- Fig. 10. Covered $k$-FS-TRs and $k$-FCPS-TRs for synthesized tests via ${\sf JEST}_{\sf fs}$ and Test262
