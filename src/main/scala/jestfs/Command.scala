@@ -153,3 +153,20 @@ case object CmdConformTest
         fails.foreach(f => println(s"  $f"))
     }
 }
+
+// -----------------------------------------------------------------------------
+// Evaluation
+// -----------------------------------------------------------------------------
+/** `test262-test` command */
+case object CmdTest262Test
+  extends Command("test262-test", CmdBuildCFG >> Test262Test) {
+  val help = "tests Test262 tests with harness files (default: tests/test262)."
+  val examples = List(
+    "jestfs test262-test                                           # all ",
+    "jestfs test262-test tests/test262/test/built-ins/Map/map.js   # file",
+    "jestfs test262-test tests/test262/test/language/expressions   # directory",
+    "jestfs test262-test -test262-test:debug -test262-test:k-fs=2  # measure coverage using 2-fcps",
+  )
+  override val targetName = "<js|dir>*"
+  override val needTarget = false
+}
