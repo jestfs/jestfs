@@ -40,7 +40,7 @@ install the docker by following the instruction in
 downlaod our docker image with the following command:
 ```bash
 docker pull jestfs/jestfs
-docker run -it -m=16g --rm jestfs/jestfs
+docker run --name jestfs -it -m=16g --rm jestfs/jestfs
 # user: guest, password: guest
 ```
 > **WARNING**: The docker image is 3GB large thus be patient when you download
@@ -170,9 +170,12 @@ First, you should generate JavaScript programs via fuzzing with five different
 feature-sensitive coverage criteria in 50 hours.
 
 Since it requires 250 hours (approx. 10 days) with a single machine, **we
-RECOMMEND you to use the generated programs we provided in `data.tar.gz`**:
+RECOMMEND you to use the generated programs we provided in
+[`data.tar.gz`](https://doi.org/10.5281/zenodo.7693926)**:
 ```bash
 tar -xvf data.tar.gz
+# please copy the data to the docker container if you use docker.
+docker cp data jestfs:/home/guest/jestfs
 ```
 > **WARNING**: Note that it may take a few minutes.
 
@@ -189,13 +192,13 @@ cp -r logs/fuzz/recent data/0
 jestfs fuzz -fuzz:duration=180000 -fuzz:k-fs=1
 cp -r logs/fuzz/recent data/1
 
-# with 1-feature-call-path-sensitive (1-FCPS) coverage.
-jestfs fuzz -fuzz:duration=180000 -fuzz:k-fs=1 -fuzz:cp
-cp -r logs/fuzz/recent data/1-cp
-
 # with 2-feature-sensitive (2-FS) coverage.
 jestfs fuzz -fuzz:duration=180000 -fuzz:k-fs=2
 cp -r logs/fuzz/recent data/2
+
+# with 1-feature-call-path-sensitive (1-FCPS) coverage.
+jestfs fuzz -fuzz:duration=180000 -fuzz:k-fs=1 -fuzz:cp
+cp -r logs/fuzz/recent data/1-cp
 
 # with 2-feature-call-path-sensitive (2-FCPS) coverage.
 jestfs fuzz -fuzz:duration=180000 -fuzz:k-fs=2 -fuzz:cp
@@ -218,13 +221,13 @@ mv logs/conform-test out/0
 jestfs conform-test data/1/minimal data/1/minimal-assertion
 mv logs/conform-test out/1
 
-# using programs generated with 1-feature-call-path-sensitive (1-FS) coverage.
-jestfs conform-test data/1-cp/minimal data/1-cp/minimal-assertion
-mv logs/conform-test out/1-cp
-
 # using programs generated with 1-feature-sensitive (1-FS) coverage.
 jestfs conform-test data/2/minimal data/2/minimal-assertion
 mv logs/conform-test out/2
+
+# using programs generated with 1-feature-call-path-sensitive (1-FS) coverage.
+jestfs conform-test data/1-cp/minimal data/1-cp/minimal-assertion
+mv logs/conform-test out/1-cp
 
 # using programs generated with 1-feature-call-path-sensitive (1-FS) coverage.
 jestfs conform-test data/2-cp/minimal data/2-cp/minimal-assertion
