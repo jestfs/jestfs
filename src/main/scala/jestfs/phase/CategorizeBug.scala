@@ -8,10 +8,10 @@ import jestfs.util.BaseUtils.*
 import io.circe.*, io.circe.generic.semiauto.*
 import io.circe.syntax._
 
-/** `categorize` phase */
-case object Categorize extends Phase[Unit, Map[String, Map[String, Int]]] {
-  val name = "categorize"
-  val help = "categorizes the bug"
+/** `categorize-bugk` phase */
+case object CategorizeBug extends Phase[Unit, Map[String, Map[String, Int]]] {
+  val name = "categorize-bug"
+  val help = "categorizes detected bugs"
 
   type Target = String
   type Tag = String

@@ -43,7 +43,7 @@ docker pull jestfs/jestfs
 docker run --name jestfs -it -m=16g --rm jestfs/jestfs
 # user: guest, password: guest
 ```
-> **WARNING**: The docker image is 15GB large thus be patient when you download
+> **WARNING**: The docker image is 20GB large thus be patient when you download
 > it and please assign more than 16GB memory for the docker engine.
 
 
@@ -173,10 +173,10 @@ feature-sensitive coverage criteria in 50 hours.
 
 Since it requires 250 hours (approx. 10 days) with a single machine, **we
 RECOMMEND you to use the generated programs we provided in
-[`data.tar.gz`](https://doi.org/10.5281/zenodo.7694243)**:
+[`data.tar.gz`](https://doi.org/10.5281/zenodo.7694983)**:
 ```bash
 # It is already included in the `data` directory when you use the docker image.
-curl https://zenodo.org/record/7694243/files/data.tar.gz -o data.tar.gz
+curl https://zenodo.org/record/7694983/files/data.tar.gz -o data.tar.gz
 tar -xvzf data.tar.gz
 ```
 
@@ -237,17 +237,32 @@ mv logs/conform-test result/2-cp
 > **WARNING**: Note that it may take 5-10 hours.
 
 Then, **please compare the `result` directory with the expected result we
-provided in [`out.tar.gz`](https://doi.org/10.5281/zenodo.7694243)**:
+provided in [`out.tar.gz`](https://doi.org/10.5281/zenodo.7694983)**:
 ```bash
 # It is already included in the `out` directory when you use the docker image.
-curl https://zenodo.org/record/7694243/files/out.tar.gz -o out.tar.gz
+curl https://zenodo.org/record/7694983/files/out.tar.gz -o out.tar.gz
 tar -xvzf out.tar.gz
 
 # compare the result and the expected result.
 diff -r result out
 ```
 
-### 3) Tables and Figures
+### 3) Categorization of Conformance Bugs
+
+
+### 4) Evaluation of Existing Test262 Conformance Tests
+
+```bash
+# It is already included in the `out` directory when you use the docker image.
+curl https://zenodo.org/record/7694983/files/test-262.tar.gz -o test-262.tar.gz
+tar -xvzf test-262.tar.gz
+
+# compare the result and the expected result.
+diff -r result out
+```
+
+
+### 4) Tables and Figures
 
 Please open the `Tables & Figures.xlsx` file and compare the following tables
 and figures in the paper:

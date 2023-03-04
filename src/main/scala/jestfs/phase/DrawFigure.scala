@@ -12,10 +12,10 @@ import io.circe.syntax._
 import scala.collection.mutable.{Map => MMap}
 import java.io.PrintWriter
 
-/** `localize` phase */
-case object HandleCoverage extends Phase[CFG, Unit] {
-  val name = "handle-coverage"
-  val help = "handles coverage"
+/** `draw-figure` phase */
+case object DrawFigure extends Phase[CFG, Unit] {
+  val name = "draw-figure"
+  val help = "draws various figures based on coverage"
 
   private var _config: Config = null
   private var jsonProtocol: Option[JsonProtocol] = None
@@ -27,16 +27,7 @@ case object HandleCoverage extends Phase[CFG, Unit] {
 
       val test262Dir = cmdConfig.targets(0)
       val allDir = cmdConfig.targets(1)
-      /*
-      // Compare test 262 with fuzzer
-      val header = Vector("sens", "left-only", "both", "right-only")
-      val body = for {
-        k <- Range(0, 3)
-        cp <- List(false, true)
-        if (k > 0 || !cp)
-      } yield compareCoverage(test262Dir, allDir, k, cp)
-      dumpRows(header +: body, s"$HANDLE_COVERAGE_LOG_DIR/test262-cmp.csv")
-       */
+
       // draw #call-path histogram
       drawKGraph(1, allDir)
       drawKGraph(2, allDir)
@@ -127,7 +118,7 @@ case object HandleCoverage extends Phase[CFG, Unit] {
       Range(0, max + 1).map(k =>
         Vector(k, encCount.toMap.getOrElse(k, 0)).map(_.toString),
       )
-    dumpRows(header +: body, s"$HANDLE_COVERAGE_LOG_DIR/$k-graph.tsv")
+    dumpRows(header +: body, s"$DRAW_FIGURE_LOG_DIR/$k-graph.tsv")
 
   private def drawCpGraph(k: Int, basedir: String) =
     println(s"Drawing cp-graph for $k vs $k-cp...")
@@ -162,10 +153,10 @@ case object HandleCoverage extends Phase[CFG, Unit] {
     val body = Range(0, max + 1).map(k =>
       Vector(k, cpCount.toMap.getOrElse(k, 0)).map(_.toString),
     )
-    dumpRows(header +: body, s"$HANDLE_COVERAGE_LOG_DIR/$k-cp-graph.tsv")
+    dumpRows(header +: body, s"$DRAW_FIGURE_LOG_DIR/$k-cp-graph.tsv")
 
   private lazy val maximumTxt: PrintWriter = getPrintWriter(
-    s"$HANDLE_COVERAGE_LOG_DIR/maximum.txt",
+    s"$DRAW_FIGURE_LOG_DIR/maximum.txt",
   )
 
   def defaultConfig: Config = Config()

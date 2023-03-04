@@ -157,25 +157,11 @@ case object CmdConformTest
 // -----------------------------------------------------------------------------
 // Evaluation
 // -----------------------------------------------------------------------------
-/** `test262-test` command */
-case object CmdTest262Test
-  extends Command("test262-test", CmdBuildCFG >> Test262Test) {
-  val help = "tests Test262 tests with harness files (default: tests/test262)."
+/** `categorize-bug` command */
+case object CmdCategorizeBug extends Command("categorize-bug", CmdBase >> CategorizeBug) {
+  val help = "categorizes detected bugs"
   val examples = List(
-    "jestfs test262-test                                           # all ",
-    "jestfs test262-test test262/test/built-ins/Map/map.js         # file",
-    "jestfs test262-test test262/test/language/expressions         # directory",
-    "jestfs test262-test -test262-test:debug -test262-test:k-fs=2  # measure coverage using 2-fcps",
-  )
-  override val targetName = "<js|dir>*"
-  override val needTarget = false
-}
-
-/** `categorize` command */
-case object CmdCategorize extends Command("categorize", CmdBase >> Categorize) {
-  val help = "categorize bug"
-  val examples = List(
-    "jestfs categorize minimal fails.json      # categorize",
+    "jestfs categorize-bug minimal fails.json",
   )
   override def showResult(result: Map[String, Map[String, Int]]): Unit =
     result.foreach((target, bugStat) => {
@@ -186,12 +172,12 @@ case object CmdCategorize extends Command("categorize", CmdBase >> Categorize) {
     })
 }
 
-/** `handle-coverage` command */
-case object CmdHandleCoverage
-  extends Command("handle-coverage", CmdBuildCFG >> HandleCoverage) {
-  val help = "various operation on coverage"
+/** `draw-figure` command */
+case object CmdDrawFigure
+  extends Command("draw-figure", CmdBuildCFG >> DrawFigure) {
+  val help = "draws various figures based on coverage"
   val examples = List(
-    "jestfs handle-coverage -handle-coverage:lower node-coverage.json",
+    "jestfs draw-figure node-coverage.json",
   )
   override def showResult(_unit: Unit) = ()
   override val targetName = "<json>"

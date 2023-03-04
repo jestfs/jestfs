@@ -20,7 +20,7 @@ val GENTEST_LOG_DIR = s"$LOG_DIR/gen-test"
 val CONFORMTEST_LOG_DIR = s"$LOG_DIR/conform-test"
 val LOCALIZE_LOG_DIR = s"$LOG_DIR/localize"
 val CATEGORIZE_LOG_DIR = s"$LOG_DIR/categorize"
-val HANDLE_COVERAGE_LOG_DIR = s"$LOG_DIR/handle-coverage"
+val DRAW_FIGURE_LOG_DIR = s"$LOG_DIR/draw-figure"
 val EVAL_LOG_DIR = s"$LOG_DIR/eval"
 val TEST262TEST_LOG_DIR = s"$LOG_DIR/test262"
 
