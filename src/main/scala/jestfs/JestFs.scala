@@ -65,6 +65,8 @@ object JestFs extends Git(BASE_DIR) {
     CmdFuzz,
     CmdConformTest,
     CmdTest262Test,
+    CmdCategorize,
+    CmdHandleCoverage,
   )
   val cmdMap = commands.foldLeft[Map[String, Command[_]]](Map()) {
     case (map, cmd) => map + (cmd.name -> cmd)
@@ -83,6 +85,8 @@ object JestFs extends Git(BASE_DIR) {
     ConformTest,
     // Evaluation
     Test262Test,
+    Categorize,
+    HandleCoverage,
   )
 
   /** command options */

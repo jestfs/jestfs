@@ -107,6 +107,8 @@ It supports the following commands:
   - If `-conform-test:debug` is given, turn on debug mode for conformance testing.
   - If `-conform-test:msgdir={string}` is given, set the directory for log messages.
   - If `-conform-test:save-bugs` is given, save found bugs to database.
+- `categorize` - categorizes the bug.
+- `handle-coverage` - handle coverage.
 
 and global options:
 - If `-silent` is given, do not show final results.
