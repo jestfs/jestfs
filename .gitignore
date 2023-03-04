@@ -46,3 +46,5 @@ data
 
 ## output
 out
+test262-result
+*.xlsx
