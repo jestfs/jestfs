@@ -28,6 +28,15 @@ case object DrawFigure extends Phase[CFG, Unit] {
       val test262Dir = cmdConfig.targets(0)
       val allDir = cmdConfig.targets(1)
 
+      // Compare test 262 with fuzzer
+      val header = Vector("sens", "left-only", "both", "right-only")
+      val body = for {
+        k <- Range(0, 3)
+        cp <- List(false, true)
+        if (k > 0 || !cp)
+      } yield compareCoverage(test262Dir, allDir, k, cp)
+      dumpRows(header +: body, s"$DRAW_FIGURE_LOG_DIR/test262-cmp.csv")
+
       // draw #call-path histogram
       drawKGraph(1, allDir)
       drawKGraph(2, allDir)

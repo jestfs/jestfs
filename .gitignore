@@ -46,5 +46,7 @@ data
 
 ## output
 out
+result
+categorized
 test262-result
 *.xlsx

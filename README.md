@@ -43,7 +43,7 @@ docker pull jestfs/jestfs
 docker run --name jestfs -it -m=16g --rm jestfs/jestfs
 # user: guest, password: guest
 ```
-> **WARNING**: The docker image is 20GB large thus be patient when you download
+> **WARNING**: The docker image is 16GB large thus be patient when you download
 > it and please assign more than 16GB memory for the docker engine.
 
 
@@ -107,8 +107,8 @@ It supports the following commands:
   - If `-conform-test:debug` is given, turn on debug mode for conformance testing.
   - If `-conform-test:msgdir={string}` is given, set the directory for log messages.
   - If `-conform-test:save-bugs` is given, save found bugs to database.
-- `categorize` - categorizes the bug.
-- `handle-coverage` - handle coverage.
+- `categorize-bug` - categorizes detected bugs.
+- `draw-figure` - draws various figures based on coverage.
 
 and global options:
 - If `-silent` is given, do not show final results.
@@ -222,15 +222,15 @@ mv logs/conform-test result/0
 jestfs conform-test data/1/minimal data/1/minimal-assertion
 mv logs/conform-test result/1
 
-# using programs generated with 1-feature-sensitive (1-FS) coverage.
+# using programs generated with 2-feature-sensitive (2-FS) coverage.
 jestfs conform-test data/2/minimal data/2/minimal-assertion
 mv logs/conform-test result/2
 
-# using programs generated with 1-feature-call-path-sensitive (1-FS) coverage.
+# using programs generated with 1-feature-call-path-sensitive (1-FCPS) coverage.
 jestfs conform-test data/1-cp/minimal data/1-cp/minimal-assertion
 mv logs/conform-test result/1-cp
 
-# using programs generated with 1-feature-call-path-sensitive (1-FS) coverage.
+# using programs generated with 2-feature-call-path-sensitive (2-FCPS) coverage.
 jestfs conform-test data/2-cp/minimal data/2-cp/minimal-assertion
 mv logs/conform-test result/2-cp
 ```
@@ -250,6 +250,29 @@ diff -r result out
 ### 3) Categorization of Conformance Bugs
 
 Please categorize the detected conformance bugs as follows:
+```bash
+mkdir categorized
+
+# for feature-insensitive (0-FS) coverage.
+jestfs categorize-bug data/0/minimal result/0/fails.json
+mv logs/categorize/test-summary.tsv categorized/0.tsv
+
+# for 1-feature-sensitive (1-FS) coverage.
+jestfs categorize-bug data/1/minimal result/1/fails.json
+mv logs/categorize/test-summary.tsv categorized/1.tsv
+
+# for 2-feature-sensitive (2-FS) coverage.
+jestfs categorize-bug data/2/minimal result/2/fails.json
+mv logs/categorize/test-summary.tsv categorized/2.tsv
+
+# for 1-feature-call-path-sensitive (1-FCPS) coverage.
+jestfs categorize-bug data/1-cp/minimal result/1-cp/fails.json
+mv logs/categorize/test-summary.tsv categorized/1-cp.tsv
+
+# for 2-feature-call-path-sensitive (2-FCPS) coverage.
+jestfs categorize-bug data/2-cp/minimal result/2-cp/fails.json
+mv logs/categorize/test-summary.tsv categorized/2-cp.tsv
+```
 
 
 ### 4) Drawing Tables and Figures
@@ -263,11 +286,30 @@ tar -xvzf test262-result.tar.gz
 
 and run the `draw-figure` command as follows:
 ```bash
-jestfs handle-coverage test262-result data
+jestfs draw-figure test262-result data
 ```
 
 Then, open the [`Tables-Figures.xlsx`](./Tables-Figures.xlsx) file and fill the
 cells colored in blue as follows:
+
+|Tab|Filename|
+|:-|:-|
+|0-bug|[`categorized/0.tsv`](./categorized/0.tsv)|
+|1-bug|[`categorized/1.tsv`](./categorized/1.tsv)|
+|2-bug|[`categorized/2.tsv`](./categorized/2.tsv)|
+|1-cp-bug|[`categorized/1-cp.tsv`](./categorized/1-cp.tsv)|
+|2-cp-bug|[`categorized/2-cp.tsv`](./categorized/2-cp.tsv)|
+|0-summary|[`data/0/summary.tsv`](./data/0/summary.tsv)|
+|1-summary|[`data/1/summary.tsv`](./data/1/summary.tsv)|
+|2-summary|[`data/2/summary.tsv`](./data/2/summary.tsv)|
+|1-cp-summary|[`data/1-cp/summary.tsv`](./data/1-cp/summary.tsv)|
+|2-cp-summary|[`data/2-cp/summary.tsv`](./data/2-cp/summary.tsv)|
+|Figure 9 (a)|[`logs/draw-figure/1-graph.tsv`](./logs/draw-figure/1-graph.tsv)|
+|Figure 9 (b)|[`logs/draw-figure/2-graph`](./logs/draw-figure/2-graph)|
+|Figure 9 (c)|[`logs/draw-figure/1-cp-graph.tsv`](./logs/draw-figure/1-cp-graph.tsv)|
+|Figure 9 (d)|[`logs/draw-figure/2-cp-graph.tsv`](./logs/draw-figure/2-cp-graph.tsv)|
+|Figure 9 (d)|[`logs/draw-figure/2-cp-graph.tsv`](./logs/draw-figure/2-cp-graph.tsv)|
+|Figure 10 (a)|[`logs/draw-figure/test262-cmp.csv`](./logs/draw-figure/test262-cmp.csv)|
 
 and compare the following tables and figures in the paper:
 
