@@ -30,8 +30,8 @@ We support two ways to use `jestfs`:
   1. [Using a Docker container](#using-a-docker-container)
   2. [Building from source](#building-from-source)
 
-However, we STRONGLY RECOMMEND you using the Docker container because it
-requires to install not only artifacts but also target JavaScript engines and
+However, we STRONGLY RECOMMEND you use the Docker container because it requires
+you to install not only the artifact but also JavaScript engines and
 transpilers.
 
 
@@ -40,10 +40,10 @@ transpilers.
 We provide a Docker container with `jestfs` and its dependencies. You can
 install the docker by following the instruction in
 [https://docs.docker.com/get-started/](https://docs.docker.com/get-started/) and
-downlaod our docker image with the following command:
+download our docker image with the following command:
 
-> **WARNING**: The docker image is 16GB large thus be patient when you download
-> it and please assign more than 16GB memory for the docker engine.
+> **WARNING**: The docker image is 16GB large. Thus, be patient when you
+> download it, and please assign more than 16GB of memory for the docker engine.
 
 ```bash
 docker pull jestfs/jestfs
@@ -60,7 +60,7 @@ GraalVM. So before installation, [GraalVM Community Edition
 [sbt](https://www.scala-sbt.org/1.x/docs/Installing-sbt-on-Linux.html), an
 interactive build tool for Scala.
 
-Then, to set the exection environment, insert the following commands to
+Then, to set the execution environment, insert the following commands to
 `~/.bashrc` (or `~/.zshrc`):
 ```bash
 # for jestfs
@@ -144,12 +144,12 @@ jestfs
 # Please type `jestfs help` to see the help message.
 ```
 
-Then, you can generate files generate JavaScript programs via fuzzing with
-1-feature-sensitive (1-FS) coverage in 60 seconds.
+Then, you generate JavaScript programs via fuzzing with 1-feature-sensitive
+(1-FS) coverage in 60 seconds.
 
 > **WARNING**: Note that it may take a few minutes longer than 60 seconds
-> because it requires to extract the mechanized specification from ECMA-262 and
-> construct initial program pool for fuzzing from it.
+> because it requires extracting the mechanized specification from ECMA-262 and
+> constructing the initial program pool for fuzzing from it.
 
 ```bash
 jestfs fuzz -fuzz:duration=60 -fuzz:k-fs=1
@@ -157,7 +157,7 @@ jestfs fuzz -fuzz:duration=60 -fuzz:k-fs=1
 
 
 Then, the generated programs and detailed logs are stored in `logs/fuzz/recent`
-directory, and it consists of the following files:
+directory, and which consists of the following files:
 
 - `node-coverage.json` - the node coverage of generated programs in the specification.
 - `branch-coverage.json` - the branch coverage of generated programs in the specification.
@@ -181,16 +181,17 @@ First, you should generate JavaScript programs via fuzzing with five different
 feature-sensitive coverage criteria in 50 hours.
 
 Since it requires 250 hours (approx. 10 days) with a single machine, **we
-RECOMMEND you to use the generated programs we provided in
+RECOMMEND you use the generated programs we provided in
 [`data.tar.gz`](https://doi.org/10.5281/zenodo.7697977)**:
+
 ```bash
 # It is already included in the `data` directory when you use the docker image.
 curl https://zenodo.org/record/7697977/files/data.tar.gz -o data.tar.gz
 tar -xvzf data.tar.gz
 ```
 
-However, if you want to generate JavaScript programs from the scratch, please
-type the following commands:
+However, if you want to generate JavaScript programs from scratch, please type
+the following commands:
 ```bash
 mkdir data
 
@@ -312,8 +313,8 @@ Please run the `draw-figure` command as follows:
 jestfs draw-figure test262-result data
 ```
 
-Then, open the [`Tables-Figures.xlsx`](./Tables-Figures.xlsx) file and fill the
-cells colored in blue as follows:
+Then, open the [`Tables-Figures.xlsx`](./Tables-Figures.xlsx) file and fill in
+the cells colored in blue with the corresponding files as follows:
 
 |Tab|Filename|
 |:-|:-|
