@@ -19,6 +19,9 @@ a JavaScript conformance test generator
 * [Step-by-Step Instructions](#step-by-step-instructions)
   + [1) JavaScript Program Generation via Fuzzing (Optional)](#1-javascript-program-generation-via-fuzzing-optional)
   + [2) Conformance Test Generation and Bug Detection](#2-conformance-test-generation-and-bug-detection)
+  + [3) Categorization of Detected Bugs](#3-categorization-of-detected-bugs)
+  + [4) Collecting Coverage Information from Test262](#4-collecting-coverage-information-from-test262)
+  + [5) Drawing Tables and Figures](#5-drawing-tables-and-figures)
 
 
 ## Getting Started Guide
@@ -38,13 +41,15 @@ We provide a Docker container with `jestfs` and its dependencies. You can
 install the docker by following the instruction in
 [https://docs.docker.com/get-started/](https://docs.docker.com/get-started/) and
 downlaod our docker image with the following command:
+
+> **WARNING**: The docker image is 16GB large thus be patient when you download
+> it and please assign more than 16GB memory for the docker engine.
+
 ```bash
 docker pull jestfs/jestfs
 docker run --name jestfs -it -m=16g --rm jestfs/jestfs
 # user: guest, password: guest
 ```
-> **WARNING**: The docker image is 16GB large thus be patient when you download
-> it and please assign more than 16GB memory for the docker engine.
 
 
 ### Building from Source
@@ -96,7 +101,7 @@ It supports the following commands:
   - If `-fuzz:duration={number}` is given, set the maximum duration for fuzzing (default: INF)
   - If `-fuzz:seed={number}` is given, set the specific seed for the random number generator (default: None).
   - If `-fuzz:k-fs={number}` is given, set the k-value for feature sensitivity (default: 0).
-  - If `-fuzz:cp` is given, turn on the call-path mode (default: false) (meaningful if `k-fs` is greater than 0).
+  - If `-fuzz:cp` is given, turn on the call-path mode (default: false) (meaningful if k-fs > 0).
 - `conform-test` - performs conform test for a JavaScript engine or a transpiler with the following options:
   - If `-gen-test:debug` is given, turn on debug mode for test generation.
   - If `-gen-test:engines={string}` is given, list of engines to test, separated by comma.
@@ -107,6 +112,9 @@ It supports the following commands:
   - If `-conform-test:debug` is given, turn on debug mode for conformance testing.
   - If `-conform-test:msgdir={string}` is given, set the directory for log messages.
   - If `-conform-test:save-bugs` is given, save found bugs to database.
+- `test262-test` - tests Test262 tests with harness files.
+  - If `-test262-test:k-fs={number}` is given, set the k-value for feature sensitivity. (default: 0)
+  - If `-test262-test:cp` is given, turn on the call-path mode (default: false) (meaningful if k-fs > 0).
 - `categorize-bug` - categorizes detected bugs.
 - `draw-figure` - draws various figures based on coverage.
 
@@ -139,13 +147,14 @@ jestfs
 Then, you can generate files generate JavaScript programs via fuzzing with
 1-feature-sensitive (1-FS) coverage in 60 seconds.
 
+> **WARNING**: Note that it may take a few minutes longer than 60 seconds
+> because it requires to extract the mechanized specification from ECMA-262 and
+> construct initial program pool for fuzzing from it.
+
 ```bash
 jestfs fuzz -fuzz:duration=60 -fuzz:k-fs=1
 ```
 
-> **WARNING**: Note that it may take a few minutes longer than 60 seconds
-> because it requires to extract the mechanized specification from ECMA-262 and
-> construct initial program pool for fuzzing from it.
 
 Then, the generated programs and detailed logs are stored in `logs/fuzz/recent`
 directory, and it consists of the following files:
@@ -211,6 +220,9 @@ cp -r logs/fuzz/recent data/2-cp
 
 To generate conformance tests and detect bugs in a JavaScript engine or a
 transpiler, please type the following commands:
+
+> **WARNING**: Note that it may take 5-10 hours.
+
 ```bash
 mkdir result
 
@@ -234,7 +246,6 @@ mv logs/conform-test result/1-cp
 jestfs conform-test data/2-cp/minimal data/2-cp/minimal-assertion
 mv logs/conform-test result/2-cp
 ```
-> **WARNING**: Note that it may take 5-10 hours.
 
 Then, **please compare the `result` directory with the expected result we
 provided in [`out.tar.gz`](https://doi.org/10.5281/zenodo.7697977)**:
@@ -247,7 +258,7 @@ tar -xvzf out.tar.gz
 diff -r result out
 ```
 
-### 3) Categorization of Conformance Bugs
+### 3) Categorization of Detected Bugs
 
 Please categorize the detected conformance bugs as follows:
 ```bash
@@ -275,16 +286,28 @@ mv logs/categorize/test-summary.tsv categorized/2-cp.tsv
 ```
 
 
-### 4) Drawing Tables and Figures
+### 4) Collecting Coverage Information from Test262
 
-First, plase download the following result of Test262 files:
+To extract data from Test262 tests, please run the following command:
+
+> **WARNING**: Note that it may take 5-10 hours.
+
+```bash
+jestfs test262-test -test262-test:debug -test262-test:k-fs=2 -test262-test:cp
+mv logs/test262/* test262-result
+```
+
+Or, you could download it as follows:
 ```bash
 # It is already included in the `test262-result` directory when you use the docker image.
 curl https://zenodo.org/record/7697977/files/test262-result.tar.gz -o test262-result.tar.gz
 tar -xvzf test262-result.tar.gz
 ```
 
-and run the `draw-figure` command as follows:
+
+### 5) Drawing Tables and Figures
+
+Please run the `draw-figure` command as follows:
 ```bash
 jestfs draw-figure test262-result data
 ```

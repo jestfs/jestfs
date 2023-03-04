@@ -11,7 +11,7 @@ _jestfs_completions() {
   local cur prev opts lastc informats outformats datafiles
   cur="${COMP_WORDS[COMP_CWORD]}"
   prev="${COMP_WORDS[COMP_CWORD-1]}"
-  cmdList="help fuzz conform-test categorize-bug draw-figure"
+  cmdList="help fuzz conform-test test262-test categorize-bug draw-figure"
   globalOpt="-silent -error -status -time"
   helpOpt=""
   extractOpt="-extract:target -extract:log -extract:repl"
@@ -20,6 +20,7 @@ _jestfs_completions() {
   fuzzOpt="-fuzz:log-interval -fuzz:debug -fuzz:timeout -fuzz:trial -fuzz:duration -fuzz:seed -fuzz:k-fs -fuzz:cp"
   gentestOpt="-gen-test:debug -gen-test:engines -gen-test:transpilers -gen-test:use-cache -gen-test:only -gen-test:skip"
   conformtestOpt="-conform-test:debug -conform-test:msgdir -conform-test:save-bugs"
+  test262testOpt="-test262-test:debug -test262-test:log -test262-test:target -test262-test:progress -test262-test:coverage -test262-test:timeout -test262-test:k-fs -test262-test:cp -test262-test:no-test-mode"
   categorizebugOpt=""
   drawfigureOpt=""
   # completion for commands
@@ -44,6 +45,10 @@ _jestfs_completions() {
           ;;
         conform-test)
           COMPREPLY=($(compgen -W "${globalOpt} ${gentestOpt} ${conformtestOpt}"))
+          return 0
+          ;;
+        test262-test)
+          COMPREPLY=($(compgen -W "${globalOpt} ${extractOpt} ${compileOpt} ${buildcfgOpt} ${test262testOpt}"))
           return 0
           ;;
         categorize-bug)

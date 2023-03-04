@@ -64,6 +64,7 @@ object JestFs extends Git(BASE_DIR) {
     CmdHelp,
     CmdFuzz,
     CmdConformTest,
+    CmdTest262Test,
     CmdCategorizeBug,
     CmdDrawFigure,
   )
@@ -82,6 +83,8 @@ object JestFs extends Git(BASE_DIR) {
     Fuzz,
     GenTest,
     ConformTest,
+    // Test262
+    Test262Test,
     // Evaluation
     CategorizeBug,
     DrawFigure,
