@@ -329,7 +329,7 @@ the cells colored in blue with the corresponding files as follows:
 |1-cp-summary|[`data/1-cp/summary.tsv`](./data/1-cp/summary.tsv)|
 |2-cp-summary|[`data/2-cp/summary.tsv`](./data/2-cp/summary.tsv)|
 |Figure 9 (a)|[`logs/draw-figure/1-graph.tsv`](./logs/draw-figure/1-graph.tsv)|
-|Figure 9 (b)|[`logs/draw-figure/2-graph`](./logs/draw-figure/2-graph.tsv)|
+|Figure 9 (b)|[`logs/draw-figure/2-graph.tsv`](./logs/draw-figure/2-graph.tsv)|
 |Figure 9 (c)|[`logs/draw-figure/1-cp-graph.tsv`](./logs/draw-figure/1-cp-graph.tsv)|
 |Figure 9 (d)|[`logs/draw-figure/2-cp-graph.tsv`](./logs/draw-figure/2-cp-graph.tsv)|
 |Figure 10 (a)|[`logs/draw-figure/test262-cmp.csv`](./logs/draw-figure/test262-cmp.csv)|
