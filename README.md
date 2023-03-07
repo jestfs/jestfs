@@ -95,7 +95,7 @@ It supports the following commands:
 - `help` - shows help messages.
 - `fuzz` - generates JavaScript programs for fuzzing with the following options:
   - If `-fuzz:log-interval={number}` is given, turn on logging mode and set logging interval (default: 600 seconds).
-  - If `-fuzz:debug={number}` is given, turn on deug mode with level (0: no-debug, 1: partial, 2: all)
+  - If `-fuzz:debug={number}` is given, turn on debug mode with level (0: no-debug, 1: partial, 2: all)
   - If `-fuzz:timeout={number}` is given, set the time limit in seconds (default: 1 second).
   - If `-fuzz:trial={number}` is given, set the number of trials (default: INF).
   - If `-fuzz:duration={number}` is given, set the maximum duration for fuzzing (default: INF)
@@ -254,9 +254,6 @@ provided in [`out.tar.gz`](https://doi.org/10.5281/zenodo.7697977)**:
 # It is already included in the `out` directory when you use the docker image.
 curl https://zenodo.org/record/7697977/files/out.tar.gz -o out.tar.gz
 tar -xvzf out.tar.gz
-
-# compare the result and the expected result.
-diff -r result out
 ```
 
 ### 3) Categorization of Detected Bugs
