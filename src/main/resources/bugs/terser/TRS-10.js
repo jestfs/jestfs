@@ -1271,7 +1271,6 @@ new class { static #x = #x in typeof 0 ( ) . #x ; } ;
 new class { static #x = #x in ~ super . x ; } ;
 new class { static #x = #x in [ 0 . #x ] ; } ;
 new class { static #x = #x in 0 . x . #x % [ ] ; } ;
-! class extends 0 { #x ; } ;
 new class { static #x = #x in null . x ( ) >= 0 ; } ;
 new class { static #x = #x in super [ 0 ?. x [ new super [ 0 ] ] . #x ] ; } ;
 new class { static #x = 0 != #x in [ 0 !== #x in 0 ?. #x , ] ; } ;
@@ -1312,7 +1311,6 @@ new class { static #x = #x in super [ 0 ?. [ super [ { [ Symbol . toPrimitive ] 
 new class { static #x = super [ #x in 0 ] ; } ;
 new class { static #x = #x in + class extends super [ 0 > 0 ] { ; } ; } ;
 new class { static #x = #x in 1 >>> 0 ; } ;
-! class x extends 0 { #x ; } ;
 new class { static #x = 0 == 0 != #x in [ 0 !== #x in ~ - 0 * 0 ** ~ 0 , ] ; } ;
 new class { static #x = super . x [ 0 | 0 == #x in [ ] ] ; } ;
 new class { static #x = #x in 0 - true ; } ;
