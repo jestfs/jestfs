@@ -255,6 +255,7 @@ provided in [`out.tar.gz`](https://doi.org/10.5281/zenodo.7697977)**:
 curl https://zenodo.org/record/7697977/files/out.tar.gz -o out.tar.gz
 tar -xvzf out.tar.gz
 ```
+Note: It is possible that the result may slightly differ from the expected result depending on the enviornment. This is fine as long as the difference in number is within one or two.
 
 ### 3) Categorization of Detected Bugs
 
